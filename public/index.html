@@ -1,28 +1,66 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-  <head>
-    <!--
-    Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
-
-        http://aws.Amazon/apache2.0/
-
-    or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-  -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>NDJsonify</title>
-  </head>
-  <body>
-
-    <h2>About</h2>
-    <p>
-    This is a service to convert JSON to <a href="http://ndjson.org">newline delimited json</a>. Send a request to <br> <br>
-      <code> http://ndjson.sarriaking.com/convert?url=yoururl </code> <br> <br> to
-      convert a JSON array to ndjson.
-    </p>
-    <h3> Example </h3>
-    Using <a href="http://bit.ly/36t6zT0">this document</a>: <br><br>
-    <code> http://ndjson.sarriaking.com/convert?url=http://bit.ly/36t6zT0 </code>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>index</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="about">About</h2>
+<p>Prepend any url containing a JSON array with</p>
+<pre><code>http://ndjson.sarriaking.com?url=</code></pre>
+<p>and it will come back as <a href="http://ndjson.org">newline delimitied JSON</a>.</p>
+<h3 id="example">Example</h3>
+<p><a href="http://bit.ly/2PMxvrj">http://bit.ly/2PMxvrj</a> contains some JSON records.</p>
+<p><a href="http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj">http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj</a> are the same records streamed out as newline delimited JSON.</p>
+<h3 id="optional-query-parameters">Optional query parameters</h3>
+<p>There are some additional query params for filtering, selecting, and sampling records. After url you can pass one of:</p>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 47%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Param</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>&amp;head=</strong></td>
+<td>Integer returning the <strong>first n records</strong> from a JSON array</td>
+<td><a href="http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;head=3">http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;head=3</a></td>
+</tr>
+<tr class="even">
+<td><strong>&amp;sample=</strong></td>
+<td>Integer returning a <strong>n% sample</strong> of records from a JSON array</td>
+<td><a href="http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;sample=20">http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;sample=20</a></td>
+</tr>
+<tr class="odd">
+<td><strong>&amp;nth=</strong></td>
+<td>Positive integer returning the <strong>nth record</strong> from a JSON array</td>
+<td><a href="http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;nth=3">http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;nth=3</a></td>
+</tr>
+<tr class="even">
+<td><strong>&amp;filter=</strong></td>
+<td>String returning any record <strong>containing the substring s</strong></td>
+<td><a href="http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;filter=keats">http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;filter=keats</a></td>
+</tr>
+</tbody>
+</table>
+</body>
 </html>
