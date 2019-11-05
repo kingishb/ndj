@@ -14,7 +14,7 @@ import (
 )
 
 type result struct {
-	line []byte 
+	line []byte
 	err  error
 }
 
@@ -96,7 +96,7 @@ func streamDecode(u string, conf config, c chan result) {
 		if filter == "" {
 			c <- result{j, nil}
 		} else {
-			if bytes.Contains(j, []byte(filter)) {
+			if bytes.Contains(bytes.ToLower(j), bytes.ToLower([]byte(filter))) {
 				c <- result{j, nil}
 			}
 			return
@@ -119,7 +119,7 @@ func streamDecode(u string, conf config, c chan result) {
 				continue
 
 			}
-		// sample at n %
+			// sample at n %
 		} else if conf.sample > 0 {
 			flip := r1.Intn(100)
 			if conf.sample > flip {
@@ -132,7 +132,7 @@ func streamDecode(u string, conf config, c chan result) {
 				iter++
 				continue
 			}
-		// return the nth record
+			// return the nth record
 		} else if conf.nth > 0 {
 			if iter == conf.nth {
 				parse(dec, "", true)
@@ -143,7 +143,7 @@ func streamDecode(u string, conf config, c chan result) {
 				iter++
 				continue
 			}
-		// filter values with substring s
+			// filter values with substring s
 		} else if conf.filter != "" {
 			parse(dec, conf.filter, true)
 			iter++

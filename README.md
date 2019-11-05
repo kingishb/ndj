@@ -1,3 +1,5 @@
+This is a tool for processing JSON. You can learn more about it at http://ndjson.sarriaking.com or read below:
+
 ## About
 Prepend any url containing a JSON array with
 ```
@@ -19,3 +21,6 @@ There are some additional query params for filtering, selecting, and sampling re
 |**&sample=**| Integer returning a **n% sample** of records from a JSON array | [http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&sample=20](http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&sample=20) |
 |**&nth=**| Positive integer returning the **nth record** from a JSON array |  [http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&nth=3](http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&nth=3) |
 |**&filter=**| String returning any record **containing the substring s** | [http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&filter=keats](http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&filter=keats) |
+
+### Install
+`go run application.go`
