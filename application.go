@@ -25,7 +25,35 @@ type config struct {
 	filter string
 }
 
-func parseConfig(u *url.URL) config {
+func validateConfig(c config) error {
+	// initialize all the flags as zero
+	f := 0
+	head := 0
+	sample := 0
+	nth := 0
+	// set them to 1 if they're set
+	if c.filter != "" {
+		f = 1
+	}
+	if c.head > 0 {
+		head = 1
+	}
+	if c.sample > 0 {
+		sample = 1
+	}
+	if c.nth > 0 {
+		nth = 1
+	}
+
+	// add them up -- anything greater than 1 has too many config flags
+	if head+sample+nth+f > 1 {
+		return fmt.Errorf("error: too many configuration values set in %v", c)
+	}
+	return nil
+
+}
+
+func parseConfig(u *url.URL) (config, error) {
 	head, err := strconv.Atoi(u.Query().Get("head"))
 	if err != nil {
 		head = 0
@@ -40,12 +68,18 @@ func parseConfig(u *url.URL) config {
 	}
 	filter := u.Query().Get("filter")
 
-	return config{
+	conf := config{
 		head:   head,
 		sample: sample,
 		nth:    nth,
 		filter: filter,
 	}
+
+	err = validateConfig(conf)
+	if err != nil {
+		return config{}, err
+	}
+	return conf, nil
 
 }
 
@@ -187,9 +221,15 @@ func main() {
 		flusher, ok := w.(http.Flusher)
 		if !ok {
 			http.Error(w, "internal server error", http.StatusInternalServerError)
+			return
 		}
 		results := make(chan result)
-		conf := parseConfig(r.URL)
+		conf, err := parseConfig(r.URL)
+		if err != nil {
+			http.Error(w, "err: too many parameters", http.StatusBadRequest)
+			return
+
+		}
 		go streamDecode(u, conf, results)
 		w.Header().Set("content-type", "application/json")
 
