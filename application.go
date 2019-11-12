@@ -206,7 +206,7 @@ func streamDecode(u string, conf config, c chan result) {
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "5000"
+		port = "8080"
 	}
 
 	const indexPage = "public/index.html"
