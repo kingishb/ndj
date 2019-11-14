@@ -1,4 +1,4 @@
-This is a tool for processing JSON. You can learn more about it at http://ndjson.sarriaking.com or read below:
+This is a tool for processing JSON. You can learn more about it at https://ndjson-mcskyhcxcq-uc.a.run.app or read below:
 
 ## About
 Prepend any url containing a JSON array with
