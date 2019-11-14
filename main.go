@@ -11,6 +11,8 @@ import (
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/savaki/jq"
 )
 
 type result struct {
@@ -23,6 +25,7 @@ type config struct {
 	sample int
 	nth    int
 	filter string
+	jq     string
 }
 
 func validateConfig(c config) error {
@@ -67,13 +70,20 @@ func parseConfig(u *url.URL) (config, error) {
 		nth = 0
 	}
 	filter := u.Query().Get("filter")
+	op := u.Query().Get("jq")
+	if op == "" {
+		op = "."
+	}
 
 	conf := config{
 		head:   head,
 		sample: sample,
 		nth:    nth,
 		filter: filter,
+		jq:     op,
 	}
+
+	log.Println(conf)
 
 	err = validateConfig(conf)
 	if err != nil {
@@ -81,6 +91,19 @@ func parseConfig(u *url.URL) (config, error) {
 	}
 	return conf, nil
 
+}
+
+func jqfilter(b []byte, s string) ([]byte, error) {
+
+	op, err := jq.Parse(s)
+	if err != nil {
+		return []byte{}, err
+	}
+	value, err := op.Apply(b)
+	if err != nil {
+		return []byte{}, err
+	}
+	return value, nil
 }
 
 func streamDecode(u string, conf config, c chan result) {
@@ -107,7 +130,7 @@ func streamDecode(u string, conf config, c chan result) {
 
 	}
 
-	parse := func(dec *json.Decoder, filter string, send bool) {
+	parse := func(dec *json.Decoder, filter string, op string, send bool) {
 
 		var m map[string]interface{}
 		// decode an array value (Message)
@@ -118,6 +141,7 @@ func streamDecode(u string, conf config, c chan result) {
 			return
 
 		}
+
 		if !send {
 			return
 		}
@@ -127,11 +151,19 @@ func streamDecode(u string, conf config, c chan result) {
 			close(c)
 			return
 		}
+
+		p, err := jqfilter(j, op)
+		if err != nil {
+			c <- result{[]byte{}, err}
+			close(c)
+			return
+		}
+
 		if filter == "" {
-			c <- result{j, nil}
+			c <- result{p, nil}
 		} else {
 			if bytes.Contains(bytes.ToLower(j), bytes.ToLower([]byte(filter))) {
-				c <- result{j, nil}
+				c <- result{p, nil}
 			}
 			return
 		}
@@ -148,7 +180,7 @@ func streamDecode(u string, conf config, c chan result) {
 			if iter == conf.head {
 				break
 			} else {
-				parse(dec, "", true)
+				parse(dec, "", conf.jq, true)
 				iter++
 				continue
 
@@ -157,33 +189,33 @@ func streamDecode(u string, conf config, c chan result) {
 		} else if conf.sample > 0 {
 			flip := r1.Intn(100)
 			if conf.sample > flip {
-				parse(dec, "", true)
+				parse(dec, "", conf.jq, true)
 				iter++
 				continue
 			} else {
 				// parse the value but drop the values
-				parse(dec, "", false)
+				parse(dec, "", conf.jq, false)
 				iter++
 				continue
 			}
 			// return the nth record
 		} else if conf.nth > 0 {
 			if iter == conf.nth {
-				parse(dec, "", true)
+				parse(dec, "", conf.jq, true)
 				iter++
 				break
 			} else {
-				parse(dec, "", false)
+				parse(dec, "", conf.jq, false)
 				iter++
 				continue
 			}
 			// filter values with substring s
 		} else if conf.filter != "" {
-			parse(dec, conf.filter, true)
+			parse(dec, conf.filter, conf.jq, true)
 			iter++
 
 		} else {
-			parse(dec, "", true)
+			parse(dec, "", conf.jq, true)
 			iter++
 		}
 
