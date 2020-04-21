@@ -5,7 +5,7 @@ Prepend any url containing a JSON array with
 ```
 https://ndjson-mcskyhcxcq-uc.a.run.app?url=
 ```
-and it will come back as [newline delimited JSON](https://ndjson.org).
+and it will come back as [newline delimited JSON](http://ndjson.org).
 
 #### Why?
 I work on a team with people who need to look at JSON from online sources, but not all can use the command line. 
