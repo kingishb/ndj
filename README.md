@@ -9,7 +9,7 @@ and it will come back as [newline delimited JSON](https://ndjson.org).
 
 #### Why?
 I work on a team with people who need to look at JSON from online sources, but not all can use the command line. 
-With this we can paste filtered data for each other and also search by line.
+With this we can paste urls to filtered data for each other, and also search by line.
 
 ### Example
 [https://bit.ly/2PMxvrj](http://bit.ly/2PMxvrj) contains some JSON records.
