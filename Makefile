@@ -1,8 +1,3 @@
-help:
-	@echo "available commands:"
-	@echo "- build    builds production bundle"
-	@echo "- serve    runs application on localhost:5000"
-
 build: md
 	zip -vr application.zip application.go public/
 
@@ -12,4 +7,4 @@ md:
 serve: md
 	go run application.go
 
-.PHONY: build md
+.PHONY: build md serve
