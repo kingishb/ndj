@@ -6,10 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>index</title>
   <style>
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css" />
   <!--[if lt IE 9]>
@@ -19,13 +22,18 @@
 <body>
 <h2 id="about">About</h2>
 <p>Prepend any url containing a JSON array with</p>
-<pre><code>http://ndjson.sarriaking.com?url=</code></pre>
-<p>and it will come back as <a href="http://ndjson.org">newline delimitied JSON</a>.</p>
+<pre><code>https://ndjson-mcskyhcxcq-uc.a.run.app?url=</code></pre>
+<p>and it will come back as <a href="https://ndjson.org">newline
+delimited JSON</a>.</p>
 <h3 id="example">Example</h3>
-<p><a href="http://bit.ly/2PMxvrj">http://bit.ly/2PMxvrj</a> contains some JSON records.</p>
-<p><a href="http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj">http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj</a> are the same records streamed out as newline delimited JSON.</p>
+<p><a href="http://bit.ly/2PMxvrj">https://bit.ly/2PMxvrj</a> contains
+some JSON records.</p>
+<p><a
+href="http://ndjson-mcskyhcxcq-uc.a.run.app?url=http://bit.ly/2PMxvrj">https://ndjson-mcskyhcxcq-uc.a.run.app?url=http://bit.ly/2PMxvrj</a>
+are the same records streamed out as newline delimited JSON.</p>
 <h3 id="optional-query-parameters">Optional query parameters</h3>
-<p>There are some additional query params for filtering, selecting, and sampling records. After url you can pass one of:</p>
+<p>There are some additional query params for filtering, selecting, and
+sampling records. After url you can pass one of:</p>
 <table>
 <colgroup>
 <col style="width: 21%" />
@@ -42,23 +50,39 @@
 <tbody>
 <tr class="odd">
 <td><strong>&amp;head=</strong></td>
-<td>Integer returning the <strong>first n records</strong> from a JSON array</td>
-<td><a href="http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;head=3">http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;head=3</a></td>
+<td>Integer returning the <strong>first n records</strong> from a JSON
+array</td>
+<td><a
+href="http://ndjson-mcskyhcxcq-uc.a.run.app?url=http://bit.ly/2PMxvrj&amp;head=3">https://ndjson-mcskyhcxcq-uc.a.run.app?url=http://bit.ly/2PMxvrj&amp;head=3</a></td>
 </tr>
 <tr class="even">
 <td><strong>&amp;sample=</strong></td>
-<td>Integer returning a <strong>n% sample</strong> of records from a JSON array</td>
-<td><a href="http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;sample=20">http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;sample=20</a></td>
+<td>Integer returning a <strong>n% sample</strong> of records from a
+JSON array</td>
+<td><a
+href="http://ndjson-mcskyhcxcq-uc.a.run.app?url=http://bit.ly/2PMxvrj&amp;sample=20">https://ndjson-mcskyhcxcq-uc.a.run.app?url=http://bit.ly/2PMxvrj&amp;sample=20</a></td>
 </tr>
 <tr class="odd">
 <td><strong>&amp;nth=</strong></td>
-<td>Positive integer returning the <strong>nth record</strong> from a JSON array</td>
-<td><a href="http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;nth=3">http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;nth=3</a></td>
+<td>Positive integer returning the <strong>nth record</strong> from a
+JSON array</td>
+<td><a
+href="http://ndjson-mcskyhcxcq-uc.a.run.app?url=http://bit.ly/2PMxvrj&amp;nth=3">https://ndjson-mcskyhcxcq-uc.a.run.app?url=http://bit.ly/2PMxvrj&amp;nth=3</a></td>
 </tr>
 <tr class="even">
 <td><strong>&amp;filter=</strong></td>
-<td>String returning any record <strong>containing the substring s</strong></td>
-<td><a href="http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;filter=keats">http://ndjson.sarriaking.com?url=http://bit.ly/2PMxvrj&amp;filter=keats</a></td>
+<td>String returning any record <strong>containing the substring
+s</strong></td>
+<td><a
+href="http://ndjson-mcskyhcxcq-uc.a.run.app?url=http://bit.ly/2PMxvrj&amp;filter=keats">https://ndjson-mcskyhcxcq-uc.a.run.app?url=http://bit.ly/2PMxvrj&amp;filter=keats</a></td>
+</tr>
+<tr class="odd">
+<td><strong>&amp;jq=</strong></td>
+<td>String containing a <strong><a
+href="https://stedolan.github.io/jq/">jq</a></strong> style filter per
+record</td>
+<td><a
+href="http://ndjson-mcskyhcxcq-uc.a.run.app?url=http://bit.ly/2PMxvrj&amp;jq=.name">https://ndjson-mcskyhcxcq-uc.a.run.app?url=http://bit.ly/2PMxvrj&amp;jq=.name</a></td>
 </tr>
 </tbody>
 </table>
